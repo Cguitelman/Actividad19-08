@@ -1,15 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividad 19/08</title>
+  <meta charset="UTF-8" />
+  <title>Comparar estudiantes</title>
 </head>
 <body>
-    <label for="text">
-        <input type="text">
-    </label>
+  <h1>Comparar cantidad de estudiantes</h1>
 
+  <label for="materiaA">Estudiantes en Materia A</label>
+  <input id="materiaA" type="number" min="0" max="100" step="1" required>
 
+  <br><br>
+
+  <label for="materiaB">Estudiantes en Materia B</label>
+  <input id="materiaB" type="number" min="0" max="100" step="1" required>
+
+  <br><br>
+
+  <button id="btnValidar" type="button">Validar</button>
+
+  <p id="mensaje"></p>
+
+  <script>
+    const a = document.getElementById('materiaA');
+    const b = document.getElementById('materiaB');
+    const msg = document.getElementById('mensaje');
+
+    function validarEnteroEnRango(el) {
+      if (el.value.trim() === '') return 'Completar este campo.';
+      const n = Number(el.value);
+      if (!Number.isInteger(n)) return 'Debe ser un número entero.';
+      if (n < 0) return 'No se permiten valores negativos.';
+      if (n > 100) return 'El máximo permitido es 100.';
+      return '';
+    }
+
+    document.getElementById('btnValidar').addEventListener('click', () => {
+      const errA = validarEnteroEnRango(a);
+      const errB = validarEnteroEnRango(b);
+
+      if (errA || errB) {
+        msg.textContent = (errA ? 'A: ' + errA + ' ' : '') + (errB ? 'B: ' + errB : '');
+        return;
+      }
+
+      const nA = Number(a.value);
+      const nB = Number(b.value);
+
+      if (nA > nB) msg.textContent = 'La Materia A tiene más estudiantes.';
+      else if (nB > nA) msg.textContent = 'La Materia B tiene más estudiantes.';
+      else msg.textContent = 'Ambas materias tienen la misma cantidad de estudiantes.';
+    });
+  </script>
 </body>
 </html>
